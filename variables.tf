@@ -4,11 +4,19 @@ variable "cidr_vpc" {
 }
 variable "cidr_subnet" {
   description = "CIDR block for the subnet"
-  default = "10.1.0.0/24"
+  default = "10.1.1.0/24"
+}
+variable "cidr_subnet_2" {
+  description = "CIDR block for the subnet"
+  default = "10.1.2.0/24"
 }
 variable "availability_zone" {
   description = "availability zone to create subnet"
   default = "us-west-2a"
+}
+variable "availability_zone_2" {
+  description = "availability zone to create subnet"
+  default = "us-west-2b"
 }
 variable "public_key_path" {
   description = "Public key path"

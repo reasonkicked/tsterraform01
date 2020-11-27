@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "terraform_state" {
   bucket = "tsterraform01-bucket"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   versioning {
