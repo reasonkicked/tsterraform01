@@ -14,11 +14,11 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-resource "aws_subnet" "subnet_public" {
+resource "aws_subnet" "subnet_public_1" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = var.cidr_subnet
+  cidr_block = var.cidr_subnet_1
   map_public_ip_on_launch = "true"
-  availability_zone = var.availability_zone
+  availability_zone = var.availability_zone_1
   tags = {
     Environment = var.environment_tag
   }
@@ -33,7 +33,7 @@ resource "aws_subnet" "subnet_public_2" {
   }
 }
 
-resource "aws_route_table" "rtb_public" {
+resource "aws_route_table" "rtb_public_1" {
   vpc_id = aws_vpc.vpc.id
 route {
       cidr_block = "0.0.0.0/0"
@@ -53,9 +53,9 @@ tags = {
     Environment = var.environment_tag
   }
 }
-resource "aws_route_table_association" "rta_subnet_public" {
-  subnet_id      = aws_subnet.subnet_public.id
-  route_table_id = aws_route_table.rtb_public.id
+resource "aws_route_table_association" "rta_subnet_public_1" {
+  subnet_id      = aws_subnet.subnet_public_1.id
+  route_table_id = aws_route_table.rtb_public_1.id
 }
 resource "aws_route_table_association" "rta_subnet_public_2" {
   subnet_id      = aws_subnet.subnet_public_2.id
@@ -135,7 +135,7 @@ resource "aws_instance" "tsawslnx01" {
               nohup busybox httpd -f -p 8080 &
               EOF
 
-  subnet_id = aws_subnet.subnet_public.id
+  subnet_id = aws_subnet.subnet_public_1.id
   vpc_security_group_ids = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id]
   key_name = aws_key_pair.ec2key.key_name
  tags = {
@@ -163,7 +163,7 @@ resource "aws_autoscaling_group" "tsasg01" {
   launch_configuration = aws_launch_configuration.tslc01.name
 
   //availability_zones = ["us-west-2a"]
-  vpc_zone_identifier       = [aws_subnet.subnet_public.id]
+  vpc_zone_identifier       = [aws_subnet.subnet_public_1.id, aws_subnet.subnet_public_2.id]
   min_size = 2
   max_size = 10
 
@@ -178,7 +178,7 @@ resource "aws_autoscaling_group" "tsasg01" {
 resource "aws_lb" "tsalb01" {
   name               = "tsalb01"
   load_balancer_type = "application"
-  subnets            = [aws_subnet.subnet_public.id, aws_subnet.subnet_public_2.id]
+  subnets            = [aws_subnet.subnet_public_1.id, aws_subnet.subnet_public_2.id]
   security_groups    = [aws_security_group.sgalb_80.id]
 }
 
@@ -214,3 +214,17 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+/*resource "aws_lb_listener_rule" "tsasg01" {
+  listener_arn = aws_lb_listener.http.arn
+  priority     = 100
+
+  condition {
+    field  = "path-pattern"
+    values = ["*"]
+  }
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tsasg01.arn
+  }
+}*/
