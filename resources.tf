@@ -81,6 +81,25 @@ resource "aws_security_group" "sg_22" {
     Environment = var.environment_tag
   }
 }
+resource "aws_security_group" "sg_80" {
+  name = "sg_80"
+  vpc_id = aws_vpc.vpc.id
+  ingress {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+ egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Environment = var.environment_tag
+  }
+}
 resource "aws_security_group" "sg_8080" {
   name = "sg_8080"
   vpc_id = aws_vpc.vpc.id
@@ -130,17 +149,37 @@ resource "aws_instance" "tsawslnx01" {
   instance_type = var.instance_type
 
     user_data = <<-EOF
-              #!/bin/bash
-              echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
-              EOF
+#!/bin/bash
+
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 1" >> /var/www/html/index.html
+EOF
 
   subnet_id = aws_subnet.subnet_public_1.id
-  vpc_security_group_ids = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id]
+  vpc_security_group_ids = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id, aws_security_group.sg_80.id]
   key_name = aws_key_pair.ec2key.key_name
  tags = {
   Environment = var.environment_tag
   Name = "tsawslnx01"
+  Owner = "tstanislawczyk"
+ }
+}
+
+resource "aws_instance" "tsawslnx02" {
+  ami           = var.instance_ami
+  instance_type = var.instance_type
+
+    user_data = <<-EOF
+#!/bin/bash
+
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 02" >> /var/www/html/index.html
+EOF
+
+  subnet_id = aws_subnet.subnet_public_2.id
+  vpc_security_group_ids = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id, aws_security_group.sg_80.id]
+  key_name = aws_key_pair.ec2key.key_name
+ tags = {
+  Environment = var.environment_tag
+  Name = "tsawslnx02"
   Owner = "tstanislawczyk"
  }
 }
@@ -173,6 +212,34 @@ resource "aws_autoscaling_group" "tsasg01" {
         propagate_at_launch = true
   }
  
+}
+
+resource "aws_elb" "tsclb01" {
+  name               = "tsclb01"
+  //availability_zones = ["us-west-2a", "us-west-2b"]
+  subnets            = [aws_subnet.subnet_public_1.id, aws_subnet.subnet_public_2.id]
+  security_groups    = [aws_security_group.sgalb_80.id]
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:80/index.html"
+    interval            = 30
+  }
+  instances                   = [aws_instance.tsawslnx01.id, aws_instance.tsawslnx02.id]
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+  tags = {
+    Name = "tsclb01"
+  }
 }
 
 resource "aws_lb" "tsalb01" {
@@ -220,7 +287,7 @@ resource "aws_lb_listener" "http" {
 
   condition {
     field  = "path-pattern"
-    values = ["*"]
+    values = ["index.html"]
   }
 
   action {
