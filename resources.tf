@@ -187,12 +187,12 @@ EOF
 resource "aws_launch_configuration" "tslc01" {
   image_id        = var.instance_ami
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id]
+  security_groups = [aws_security_group.sg_22.id, aws_security_group.sg_8080.id, aws_security_group.sg_80.id]
 
   user_data = <<-EOF
-              #!/bin/bash
-              echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
+#!/bin/bash
+
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 02" >> /var/www/html/index.html
               EOF
   lifecycle {
   create_before_destroy = true
@@ -200,10 +200,11 @@ resource "aws_launch_configuration" "tslc01" {
 }
 resource "aws_autoscaling_group" "tsasg01" {
   launch_configuration = aws_launch_configuration.tslc01.name
+  target_group_arns =[aws_lb_target_group.tsasg01.arn]
 
   //availability_zones = ["us-west-2a"]
   vpc_zone_identifier       = [aws_subnet.subnet_public_1.id, aws_subnet.subnet_public_2.id]
-  min_size = 2
+  min_size = 4
   max_size = 10
 
   tag {
@@ -251,7 +252,7 @@ resource "aws_lb" "tsalb01" {
 
 resource "aws_lb_target_group" "tsasg01" {
   name     = "terraform-asg-example"
-  port     = 8080
+  port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.vpc.id
 
@@ -281,17 +282,24 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
-/*resource "aws_lb_listener_rule" "tsasg01" {
+resource "aws_lb_listener_rule" "tsasg01" {
   listener_arn = aws_lb_listener.http.arn
   priority     = 100
 
-  condition {
-    field  = "path-pattern"
-    values = ["index.html"]
-  }
 
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.tsasg01.arn
   }
-}*/
+
+
+  
+  condition {
+      path_pattern {
+      values = ["/index.html*"]
+    }
+    /*field  = "path-pattern"
+    values = ["index.html"]*/
+  }
+
+}
