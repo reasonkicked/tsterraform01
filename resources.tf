@@ -151,7 +151,7 @@ resource "aws_instance" "tsawslnx01" {
     user_data = <<-EOF
 #!/bin/bash
 
-yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 1" >> /var/www/html/index.html
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to 1" >> /var/www/html/index.html
 EOF
 
   subnet_id = aws_subnet.subnet_public_1.id
@@ -171,7 +171,7 @@ resource "aws_instance" "tsawslnx02" {
     user_data = <<-EOF
 #!/bin/bash
 
-yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 02" >> /var/www/html/index.html
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome 02" >> /var/www/html/index.html
 EOF
 
   subnet_id = aws_subnet.subnet_public_2.id
@@ -192,7 +192,7 @@ resource "aws_launch_configuration" "tslc01" {
   user_data = <<-EOF
 #!/bin/bash
 
-yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to A Cloud Guru's school of Cloud 02" >> /var/www/html/index.html
+yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to 02" >> /var/www/html/index.html
               EOF
   lifecycle {
   create_before_destroy = true
