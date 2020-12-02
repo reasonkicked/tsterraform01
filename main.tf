@@ -37,9 +37,11 @@ module "network" {
   source = "./global/network"
 }
 
-module "rds-test" {
+
+
+module "rds-test2" {
   source = "./global/rds-db"
+   subnet_group_name = "test2"
+ 
 }
-
-
 

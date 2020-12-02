@@ -21,7 +21,7 @@ data "terraform_remote_state" "terraform_state" {
   }
 }
 resource "aws_db_subnet_group" "example" {
-  name       = "main"
+  name       = var.subnet_group_name
 
   subnet_ids = [
     data.terraform_remote_state.terraform_state.outputs.public_subnet_1,
@@ -48,4 +48,5 @@ resource "aws_db_instance" "example" {
   db_subnet_group_name = aws_db_subnet_group.example.name
   skip_final_snapshot = true
   vpc_security_group_ids = [data.terraform_remote_state.terraform_state.outputs.dbsg]
+  multi_az = true
 }

@@ -15,3 +15,6 @@ variable "environment_tag" {
   default = "Production"
 }
 */
+/*variable "subnet_group_name" {
+  type = string
+}*/
