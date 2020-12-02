@@ -1,6 +1,3 @@
-provider "aws" {
- region = "us-west-2"
-}
 terraform {
   backend "s3" {
     # Replace this with your bucket name!
@@ -13,6 +10,7 @@ terraform {
    // encrypt        = true
   }
 }
+
 data "terraform_remote_state" "terraform_state" {
   //workspace = terraform.workspace
   backend   = "s3"
@@ -25,11 +23,12 @@ data "terraform_remote_state" "terraform_state" {
 resource "aws_db_subnet_group" "example" {
   name       = "main"
 
-  subnet_ids = flatten([
+  subnet_ids = [
     data.terraform_remote_state.terraform_state.outputs.public_subnet_1,
     data.terraform_remote_state.terraform_state.outputs.public_subnet_2
+    //aws_subnet.subnet_public_1.id,
     //aws_subnet.subnet_public_2.id
-  ])
+  ]
 
   tags = {
     Name = "My DB subnet group"
@@ -47,4 +46,6 @@ resource "aws_db_instance" "example" {
   password             = "foobarbaz"
   parameter_group_name = "default.mysql5.7"
   db_subnet_group_name = aws_db_subnet_group.example.name
+  skip_final_snapshot = true
+  vpc_security_group_ids = [data.terraform_remote_state.terraform_state.outputs.dbsg]
 }

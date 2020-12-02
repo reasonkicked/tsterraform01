@@ -1,7 +1,7 @@
 provider "aws" {
  region = "us-west-2"
 }
-resource "aws_s3_bucket" "terraform_state" {
+resource "aws_s3_bucket" "tsterraform01-s3" {
   bucket = "tsterraform01-s3"
 
   lifecycle {
@@ -32,3 +32,14 @@ terraform {
    // encrypt        = true
   }
 }
+
+module "network" {
+  source = "./global/network"
+}
+
+module "rds-test" {
+  source = "./global/rds-db"
+}
+
+
+

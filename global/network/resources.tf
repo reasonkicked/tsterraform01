@@ -81,6 +81,7 @@ resource "aws_security_group" "sg_22" {
     Environment = var.environment_tag
   }
 }
+
 resource "aws_security_group" "sg_80" {
   name = "sg_80"
   vpc_id = aws_vpc.vpc.id
@@ -133,5 +134,24 @@ resource "aws_security_group" "sgalb_80" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
+resource "aws_security_group" "sg_3306" {
+  name = "sg_3306"
+  vpc_id = aws_vpc.vpc.id
+  ingress {
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+     // cidr_blocks = ["0.0.0.0/0"]
+      security_groups = [aws_security_group.sgalb_80.id]
+  }
+ egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Environment = var.environment_tag
+  }
+}
 
