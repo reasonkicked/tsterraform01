@@ -1,25 +1,6 @@
 provider "aws" {
  region = "us-west-2"
 }
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "tsterraform01-s3"
-
-  lifecycle {
-    prevent_destroy = false
-  }
-
-  versioning {
-    enabled = false
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-}
 terraform {
   backend "s3" {
     # Replace this with your bucket name!
