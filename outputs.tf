@@ -29,3 +29,24 @@ output "vpc2_id" {
 output "igw_id" {
   value = module.igw1.igw_id
 }
+output "public_rtb_1_id" {
+  value = module.rtb_public_1.public_rtb_id
+}
+output "public_subnet_1_id" {
+  value = module.subnet_public_1.public_subnet_id
+}
+output "public_rtb_2_id" {
+  value = module.rtb_public_2.public_rtb_id
+}
+output "public_subnet_2_id" {
+  value = module.subnet_public_2.public_subnet_id
+}
+output "security_group_sg_80_id" {
+  value = module.sg_80.security_group_id
+}
+output "security_group_sg_8080_id" {
+  value = module.sg_8080.security_group_id
+}
+output "security_group_sg_3306_id" {
+  value = module.sg_3306.security_group_id
+}
