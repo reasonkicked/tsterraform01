@@ -1,3 +1,12 @@
+variable "cidr_vpc" {
+  description = "CIDR block for the VPC"
+  default = "10.1.0.0/16"
+}
+
+/*
+variable "vpc_id" {
+  type = string
+} */
 /*variable "public_key_path" {
   description = "Public key path"
   default = "~/.ssh/id_rsa.pub"
