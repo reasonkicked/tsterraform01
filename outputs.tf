@@ -56,6 +56,9 @@ output "private_subnet_4_id" {
 output "security_group_sg_80_id" {
   value = module.sg_80.security_group_id
 }
+output "security_group_sg_22_id" {
+  value = module.sg_22.security_group_id
+}
 output "security_group_sg_8080_id" {
   value = module.sg_8080.security_group_id
 }
@@ -69,4 +72,9 @@ output "rds_db_subnet_group_01_id" {
 
 output "ec2_key_pair_name" {
     value = module.ec2_key_pair.key_pair_name
+}
+
+
+output "ec2_asg_lc_1_name" {
+  value = module.ec2_asg_lc_1.ec2_asg_lc_name
 }

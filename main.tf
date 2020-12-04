@@ -73,11 +73,35 @@ module "ec2_tslnx01" {
   subnet_for_ec2 = module.subnet_public_1.public_subnet_id
   key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
   security_groups_for_ec2 = [
-    module.sg_80.security_group_id
+    module.sg_80.security_group_id,
+    module.sg_22.security_group_id
   ]
 
 
 
   Name-tag = "ec2_tslnx"
   Owner-tag = "tstanislawczyk"
+}
+
+module "ec2_asg_lc_1" {
+  source = "./modules/ec2/ec2-asg-lc"
+  instance_ami = "ami-0e472933a1395e172"
+  instance_type = "t2.micro"
+   key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
+  security_groups_for_ec2 = [
+    module.sg_80.security_group_id,
+    module.sg_22.security_group_id
+  ]
+}
+
+module "ec2-asg-web-server" {
+  source = "./modules/ec2/ec2-asg"
+  asglc_name = module.ec2_asg_lc_1.ec2_asg_lc_name
+  Name-tag = "ec2-asg-web-server"
+  min_size = 2
+  max_size = 4
+  subnets_ids_list = [
+    module.subnet_public_1.public_subnet_id,
+    module.subnet_public_2.public_subnet_id
+  ]
 }

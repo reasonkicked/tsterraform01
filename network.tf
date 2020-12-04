@@ -76,6 +76,13 @@ module "rta_subnet_public_2" {
   public_subnet_id = module.subnet_public_2.public_subnet_id
   public_rtb_id = module.rtb_public_2.public_rtb_id
 }
+module "sg_22" {
+    source = "./modules/network/security_group"
+    security_group_name = "sg_22"
+    subnet_vpc_id = module.vpc1.vpc_id
+    sg_from_port = 22
+    sg_to_port = 22
+}
 module "sg_80" {
     source = "./modules/network/security_group"
     security_group_name = "sg_80"
