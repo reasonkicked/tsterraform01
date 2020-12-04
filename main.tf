@@ -40,11 +40,22 @@ module "network" {
 }
 */
 
-/*
-module "rds-test2" {
-  source = "./global/rds-db"
-   subnet_group_name = "test2"
- 
+
+module "rds_db_subnet_group_01" {
+  source = "./modules/data-stores/rds-db-subnet-group"
+  subnet_group_name = "rds_db_subnet_group_01"
+  subnets_ids_list = [
+    module.subnet_private_3.private_subnet_id,
+    module.subnet_private_4.private_subnet_id
+  ]
 }
 
-*/
+
+module "rds-db-instance-01" {
+  source = "./modules/data-stores/rds-db-instance"
+  security_groups_ids_list = [
+    module.sg_3306.security_group_id
+  ]
+  subnet_group_db_name = module.rds_db_subnet_group_01.db_subnet_group_id
+  
+}

@@ -41,6 +41,18 @@ output "public_rtb_2_id" {
 output "public_subnet_2_id" {
   value = module.subnet_public_2.public_subnet_id
 }
+output "private_subnet_1_id" {
+  value = module.subnet_private_1.private_subnet_id
+}
+output "private_subnet_2_id" {
+  value = module.subnet_private_2.private_subnet_id
+}
+output "private_subnet_3_id" {
+  value = module.subnet_private_1.private_subnet_id
+}
+output "private_subnet_4_id" {
+  value = module.subnet_private_2.private_subnet_id
+}
 output "security_group_sg_80_id" {
   value = module.sg_80.security_group_id
 }
@@ -49,4 +61,8 @@ output "security_group_sg_8080_id" {
 }
 output "security_group_sg_3306_id" {
   value = module.sg_3306.security_group_id
+}
+
+output "rds_db_subnet_group_01_id" {
+  value = module.rds_db_subnet_group_01.db_subnet_group_id
 }

@@ -20,22 +20,8 @@ data "terraform_remote_state" "terraform_state" {
     region = "us-west-2"
   }
 }
-resource "aws_db_subnet_group" "example" {
-  name       = var.subnet_group_name
 
-  subnet_ids = [
-    data.terraform_remote_state.terraform_state.outputs.public_subnet_1_id,
-    data.terraform_remote_state.terraform_state.outputs.public_subnet_2_id
-    //aws_subnet.subnet_public_1.id,
-    //aws_subnet.subnet_public_2.id
-  ]
-
-  tags = {
-    Name = "My DB subnet group"
-  }
-}
-
-resource "aws_db_instance" "example" {
+resource "aws_db_instance" "db_instance" {
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"
@@ -45,8 +31,8 @@ resource "aws_db_instance" "example" {
   username             = "foo"
   password             = "foobarbaz"
   parameter_group_name = "default.mysql5.7"
-  db_subnet_group_name = aws_db_subnet_group.example.name
+  db_subnet_group_name = var.subnet_group_db_name
   skip_final_snapshot = true
-  vpc_security_group_ids = [data.terraform_remote_state.terraform_state.outputs.security_group_sg_3306_id]
+  vpc_security_group_ids = var.security_groups_ids_list
   multi_az = true
 }
