@@ -66,3 +66,7 @@ output "security_group_sg_3306_id" {
 output "rds_db_subnet_group_01_id" {
   value = module.rds_db_subnet_group_01.db_subnet_group_id
 }
+
+output "ec2_key_pair_name" {
+    value = module.ec2_key_pair.key_pair_name
+}
