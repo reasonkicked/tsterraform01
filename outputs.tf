@@ -78,3 +78,15 @@ output "ec2_key_pair_name" {
 output "ec2_asg_lc_1_name" {
   value = module.ec2_asg_lc_1.ec2_asg_lc_name
 }
+
+output "alb01_arn" {
+  value = module.alb01.alb_arn
+}
+
+output "alb_listener_http_01_arn" {
+  value = module.alb_listener_http_01.alb_listener_http_arn
+}
+
+output "alb_target_group_01_arn" {
+  value = module.alb_target_group_01.alb_target_group_arn
+}

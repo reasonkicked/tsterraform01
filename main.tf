@@ -105,3 +105,59 @@ module "ec2-asg-web-server" {
     module.subnet_public_2.public_subnet_id
   ]
 }
+
+module "alb01" {
+  source = "./modules/network/alb"
+  name = "alb01"
+  load_balancer_type = "application"
+  subnets = [
+    module.subnet_public_1.public_subnet_id,
+    module.subnet_public_2.public_subnet_id
+  ]
+  security_groups    = [
+    module.sg_80.security_group_id
+  ]
+}
+
+module "alb_listener_http_01" {
+  source = "./modules/network/alb_listener"
+  load_balancer_arn = module.alb01.alb_arn
+  port = 80
+  protocol = "HTTP"
+  type = "fixed-response"
+  content_type = "text/plain"
+  message_body = "404: page not found"
+  status_code  = 404
+}
+
+module "alb_target_group_01" {
+  source = "./modules/network/alb_target_group"
+  name     = "albtg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = module.vpc1.vpc_id
+
+    path                = "/"
+    matcher             = "200"
+    interval            = 15
+    timeout             = 3
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+}
+
+module "alb_listener_rule_01" {
+  source = "./modules/network/alb_listener_rule"
+
+  listener_arn = module.alb_listener_http_01.alb_listener_http_arn
+  priority = 100
+  type = "forward"
+  target_group_arn = module.alb_target_group_01.alb_target_group_arn
+
+}
+/*
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = module.alb_target_group_01.alb_target_group_arn
+  target_id        = aws_instance.test.id
+  port             = 80
+}
+*/
