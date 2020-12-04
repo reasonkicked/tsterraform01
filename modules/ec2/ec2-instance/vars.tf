@@ -13,8 +13,15 @@ variable "subnet_for_ec2" {
   
 }
 variable "key_pair_for_ec2" {
-  
+
 }
+/*
+
+variable "user_data_script" {
+  type        = string
+  description = "User data content"
+}
+*/
 variable "Name-tag" {
   description = "Name of the instance"
   default = "ec2-tslnx"

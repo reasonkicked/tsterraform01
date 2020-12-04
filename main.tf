@@ -76,6 +76,8 @@ module "ec2_tslnx01" {
     module.sg_80.security_group_id
   ]
 
+
+
   Name-tag = "ec2_tslnx"
   Owner-tag = "tstanislawczyk"
 }
