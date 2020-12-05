@@ -90,3 +90,10 @@ output "alb_listener_http_01_arn" {
 output "alb_target_group_01_arn" {
   value = module.alb_target_group_01.alb_target_group_arn
 }
+
+output "eip_01_id" {
+  value = module.eip_01.eip_id
+}
+output "eip_02_id" {
+  value = module.eip_02.eip_id
+}

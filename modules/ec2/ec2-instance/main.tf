@@ -33,7 +33,7 @@ resource "aws_instance" "ec2_instance" {
 
  tags = {
   Environment = var.environment_tag
-  Name = var.Owner-tag
-  Owner = var.Name-tag
+  Name = var.Name-tag
+  Owner = var.Owner-tag
  }
 }

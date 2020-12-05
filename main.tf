@@ -162,10 +162,19 @@ module "alb_listener_rule_01" {
 
 
 }
-/*
-resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn = module.alb_target_group_01.alb_target_group_arn
-  target_id        = aws_instance.test.id
-  port             = 80
+module "eip_01" {
+  source = "./modules/network/eip"
 }
-*/
+module "eip_02" {
+  source = "./modules/network/eip"
+}
+module "nat_gw_01" {
+  source = "./modules/network/nat_gw"
+  allocation_id = module.eip_01.eip_id
+  subnet_id = module.subnet_public_1.public_subnet_id
+}
+module "nat_gw_02" {
+  source = "./modules/network/nat_gw"
+  allocation_id = module.eip_02.eip_id
+  subnet_id = module.subnet_public_2.public_subnet_id
+}
