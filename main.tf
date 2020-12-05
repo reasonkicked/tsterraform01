@@ -66,7 +66,7 @@ module "ec2_key_pair" {
   public_key_path = "~/.ssh/id_rsa.pub"
 }
 
-module "ec2_tslnx01" {
+module "ec2_write_node" {
   source = "./modules/ec2/ec2-instance"
   instance_ami = "ami-0e472933a1395e172"
   instance_type = "t2.micro"
@@ -79,7 +79,7 @@ module "ec2_tslnx01" {
 
 
 
-  Name-tag = "ec2_tslnx"
+  Name-tag = "ec2_write_node"
   Owner-tag = "tstanislawczyk"
 }
 
@@ -96,13 +96,17 @@ module "ec2_asg_lc_1" {
 
 module "ec2-asg-web-server" {
   source = "./modules/ec2/ec2-asg"
-  asglc_name = module.ec2_asg_lc_1.ec2_asg_lc_name
+  launch_configuration = module.ec2_asg_lc_1.ec2_asg_lc_name
   Name-tag = "ec2-asg-web-server"
   min_size = 2
   max_size = 4
+  health_check_grace_period = 30
+  target_group_arns  = [
+    module.alb_target_group_01.alb_target_group_arn
+  ]
   subnets_ids_list = [
-    module.subnet_public_1.public_subnet_id,
-    module.subnet_public_2.public_subnet_id
+    module.subnet_private_1.private_subnet_id,
+    module.subnet_private_2.private_subnet_id
   ]
 }
 
@@ -152,6 +156,10 @@ module "alb_listener_rule_01" {
   priority = 100
   type = "forward"
   target_group_arn = module.alb_target_group_01.alb_target_group_arn
+  
+  //path_pattern values
+  values = ["/index.html*", "/"]
+
 
 }
 /*

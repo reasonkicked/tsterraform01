@@ -21,7 +21,7 @@ resource "aws_lb_listener_rule" "tsasg01" {
  
   condition {
       path_pattern {
-      values = ["/index.html*"]
+      values = var.values
     }
     
  }
