@@ -75,7 +75,6 @@ output "rds_db_subnet_group_01_id" {
 output "ec2_key_pair_name" {
     value = module.ec2_key_pair.key_pair_name
 }
-/*
 
 output "ec2_asg_lc_1_name" {
   value = module.ec2_asg_lc_1.ec2_asg_lc_name
@@ -111,4 +110,13 @@ output "nat_gw_rt_01_id" {
 output "nat_gw_rt_02_id" {
   value = module.nat_gw_rt_02.nat_gw_rt_id
 }
-*/
+
+output "s3_bucket_s3-wp-media-ts_id" {
+  value = module.s3-wp-media-ts.s3_bucket_id
+}
+output "cloudfront_oai_wp_id" {
+  value = module.cloudfront_oai_wp.oai_id
+}
+output "iam_role_s3_full_access_id" {
+  value = module.iam_role_s3_full_access.iam_role_s3_full_access_id
+}

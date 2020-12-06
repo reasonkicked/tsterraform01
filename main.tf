@@ -39,7 +39,29 @@ module "network" {
   source = "./global/network"
 }
 */
+module "s3-wp-code-ts" {
+  source = "./modules/data-stores/s3-wp-code-ts"
+  bucket = "s3-wp-code-ts"
+}
+module "s3-wp-media-ts" {
+  source = "./modules/data-stores/s3-wp-media-ts"
+  bucket = "s3-wp-media-ts"
+}
+/*
+module "iam_role_s3_full_access" {
+  source = "./modules/iam_role_s3_full_access"
+}*/
+module "cloudfront_oai_wp" {
+  source = "./modules/data-stores/s3-wp-media-ts/cloudfront_oai"
+}
 
+module "cloudfront_distr_wp" {
+  
+  source = "./modules/data-stores/s3-wp-media-ts/cloudfront_distr"
+  domain_name = "s3-wp-media-ts.s3.amazonaws.com"
+  origin_id = "s3-wp-media-ts"
+  oai_id = "origin-access-identity/cloudfront/EDU6S5KRM2MS5"
+}
 
 module "rds_db_subnet_group_01" {
   source = "./modules/data-stores/rds-db-subnet-group"
