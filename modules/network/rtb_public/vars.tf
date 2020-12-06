@@ -1,8 +1,8 @@
-variable "subnet_vpc_id" {
+variable "vpc_id" {
 
 }
 
-variable "vpc_igw_id" {
+variable "gateway_id" {
 
 }
 

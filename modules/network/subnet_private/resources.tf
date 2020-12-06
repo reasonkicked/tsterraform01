@@ -5,5 +5,6 @@ resource "aws_subnet" "subnet_private" {
   availability_zone = var.subnet_az
   tags = {
     Environment = var.environment_tag
+    Name = var.Name-tag
   }
 }

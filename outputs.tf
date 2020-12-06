@@ -23,9 +23,7 @@ output "dbsg" {
 output "vpc1_id" {
   value = module.vpc1.vpc_id
 }
-output "vpc2_id" {
-  value = module.vpc2.vpc_id
-}
+
 output "igw_id" {
   value = module.igw1.igw_id
 }
@@ -53,11 +51,15 @@ output "private_subnet_3_id" {
 output "private_subnet_4_id" {
   value = module.subnet_private_2.private_subnet_id
 }
+
+output "security_group_sg_22_id" {
+  value = module.sg_22.security_group_id
+}
 output "security_group_sg_80_id" {
   value = module.sg_80.security_group_id
 }
-output "security_group_sg_22_id" {
-  value = module.sg_22.security_group_id
+output "security_group_sg_443_id" {
+  value = module.sg_443.security_group_id
 }
 output "security_group_sg_8080_id" {
   value = module.sg_8080.security_group_id
@@ -73,7 +75,7 @@ output "rds_db_subnet_group_01_id" {
 output "ec2_key_pair_name" {
     value = module.ec2_key_pair.key_pair_name
 }
-
+/*
 
 output "ec2_asg_lc_1_name" {
   value = module.ec2_asg_lc_1.ec2_asg_lc_name
@@ -97,3 +99,16 @@ output "eip_01_id" {
 output "eip_02_id" {
   value = module.eip_02.eip_id
 }
+output "nat_gw_01_id" {
+  value = module.nat_gw_01.nat_gw_id
+}
+output "nat_gw_02_id" {
+  value = module.nat_gw_02.nat_gw_id
+}
+output "nat_gw_rt_01_id" {
+  value = module.nat_gw_rt_01.nat_gw_rt_id
+}
+output "nat_gw_rt_02_id" {
+  value = module.nat_gw_rt_02.nat_gw_rt_id
+}
+*/

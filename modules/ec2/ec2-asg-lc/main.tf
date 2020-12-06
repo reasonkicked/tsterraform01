@@ -25,9 +25,8 @@ resource "aws_launch_configuration" "asglc" {
   //data.template_file.user_data.rendered
  user_data = <<-EOF
 #!/bin/bash
-
 yum update -y && yum install httpd -y && service httpd start && chkconfig httpd on && echo "welcome to 02" >> /var/www/html/index.html
-              EOF
+EOF
   lifecycle {
   create_before_destroy = true
   }

@@ -2,10 +2,10 @@ variable "cidr_vpc" {
   default = ["0.0.0.0/0"]
   description = "CIDR block for the VPC"
 }
-variable "security_group_name" {
+variable "name" {
 
 }
-variable "subnet_vpc_id" {
+variable "vpc_id" {
   
 }
 variable "sg_from_port" {

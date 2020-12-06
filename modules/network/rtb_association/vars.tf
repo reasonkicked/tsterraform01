@@ -1,8 +1,8 @@
-variable "public_subnet_id" {
+variable "subnet_id" {
 
 }
 
-variable "public_rtb_id" {
+variable "route_table_id" {
 
 }
 

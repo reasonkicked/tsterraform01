@@ -14,7 +14,10 @@ variable "availability_zone" {
   default = "us-west-2a"
 }
 
-
+variable "Name-tag" {
+  description = "Name of the instance"
+  default = "ec2-tslnx"
+}
 variable "environment_tag" {
   description = "Environment tag"
   default = "Production"

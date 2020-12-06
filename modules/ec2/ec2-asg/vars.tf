@@ -7,8 +7,9 @@ variable "min_size" {
 variable "max_size" {
 
 }
-variable "launch_configuration" {
 
+variable "launch_configuration" {
+  
 }
 variable "target_group_arns" {
   type = list(string)

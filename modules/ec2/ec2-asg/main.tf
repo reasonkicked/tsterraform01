@@ -11,6 +11,7 @@ terraform {
   }
 }
 resource "aws_autoscaling_group" "asg" {
+  //depends_on = var.depends_on
   launch_configuration = var.launch_configuration // aws_launch_configuration.tslc01.name
   //target_group_arns =[aws_lb_target_group.tsasg01.arn]
 

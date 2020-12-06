@@ -1,6 +1,6 @@
 resource "aws_security_group" "security_group" {
-  name = var.security_group_name
-  vpc_id = var.subnet_vpc_id
+  name = var.name
+  vpc_id = var.vpc_id
   # Allow inbound HTTP requests
   ingress {
     from_port   = var.sg_from_port
@@ -12,9 +12,9 @@ resource "aws_security_group" "security_group" {
 
   # Allow all outbound requests
   egress {
-    from_port   = var.sg_from_port
-    to_port     = var.sg_from_port
-    protocol    = var.sg_protocol
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     //cidr_blocks  = var.cidr_vpc
     security_groups = var.security_groups_ids
   }

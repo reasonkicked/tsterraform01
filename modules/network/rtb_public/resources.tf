@@ -1,8 +1,8 @@
 resource "aws_route_table" "rtb_public" {
-  vpc_id = var.subnet_vpc_id
+  vpc_id = var.vpc_id
 route {
       cidr_block = "0.0.0.0/0"
-      gateway_id = var.vpc_igw_id
+      gateway_id = var.gateway_id
   }
 tags = {
     Environment = var.environment_tag

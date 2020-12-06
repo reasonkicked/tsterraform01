@@ -73,12 +73,10 @@ module "ec2_write_node" {
   subnet_for_ec2 = module.subnet_public_1.public_subnet_id
   key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
   security_groups_for_ec2 = [
+    module.sg_443.security_group_id,
     module.sg_80.security_group_id,
     module.sg_22.security_group_id
   ]
-
-
-
   Name-tag = "ec2_write_node"
   Owner-tag = "tstanislawczyk"
 }
@@ -89,21 +87,23 @@ module "ec2_asg_lc_1" {
   instance_type = "t2.micro"
    key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
   security_groups_for_ec2 = [
+    module.sg_443.security_group_id,
     module.sg_80.security_group_id,
     module.sg_22.security_group_id
   ]
 }
 
-module "ec2-asg-web-server" {
+module "ec2_asg_web_server" {
   source = "./modules/ec2/ec2-asg"
+  depends_on = [    module.ec2_asg_lc_1   ]
   launch_configuration = module.ec2_asg_lc_1.ec2_asg_lc_name
   Name-tag = "ec2-asg-web-server"
-  min_size = 2
+  min_size = 3
   max_size = 4
   health_check_grace_period = 30
-  target_group_arns  = [
-    module.alb_target_group_01.alb_target_group_arn
-  ]
+
+  target_group_arns  = [module.alb_target_group_01.alb_target_group_arn]
+  
   subnets_ids_list = [
     module.subnet_private_1.private_subnet_id,
     module.subnet_private_2.private_subnet_id
@@ -125,6 +125,7 @@ module "alb01" {
 
 module "alb_listener_http_01" {
   source = "./modules/network/alb_listener"
+  depends_on = [module.alb01]
   load_balancer_arn = module.alb01.alb_arn
   port = 80
   protocol = "HTTP"
@@ -136,6 +137,7 @@ module "alb_listener_http_01" {
 
 module "alb_target_group_01" {
   source = "./modules/network/alb_target_group"
+  depends_on = [module.alb_listener_http_01]
   name     = "albtg"
   port     = 80
   protocol = "HTTP"
@@ -161,20 +163,4 @@ module "alb_listener_rule_01" {
   values = ["/index.html*", "/"]
 
 
-}
-module "eip_01" {
-  source = "./modules/network/eip"
-}
-module "eip_02" {
-  source = "./modules/network/eip"
-}
-module "nat_gw_01" {
-  source = "./modules/network/nat_gw"
-  allocation_id = module.eip_01.eip_id
-  subnet_id = module.subnet_public_1.public_subnet_id
-}
-module "nat_gw_02" {
-  source = "./modules/network/nat_gw"
-  allocation_id = module.eip_02.eip_id
-  subnet_id = module.subnet_public_2.public_subnet_id
 }
