@@ -120,7 +120,7 @@ module "ec2_write_node" {
 
 module "ec2_asg_lc_1" {
   source = "./modules/ec2/ec2-asg-lc"
-  instance_ami = "ami-0e472933a1395e172"
+  instance_ami = "ami-0f7e3927cee806b59" //custom read node ami
   instance_type = "t2.micro"
    key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
   security_groups_for_ec2 = [
