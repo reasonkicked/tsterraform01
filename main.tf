@@ -51,12 +51,17 @@ module "bucket_policy_s3_full_access" {
   source = "./modules/bucket_policy_s3_full_access"
   bucket = module.s3-wp-media-ts.s3_bucket_id
 }
-
 module "iam_role_s3_full_access" {
   source = "./modules/iam_role_s3_full_access"
 }
 module "iam_role_s3_full_access_attachment" {
   source = "./modules/iam_role_s3_full_access_attachment"
+  role = module.iam_role_s3_full_access.iam_role_s3_full_access_id
+}
+
+module "iam_role_s3_instance_profile_s3" {
+  source = "./modules/iam_role_s3_instance_profile"
+  name = "iam_role_s3_instance_profile_s3"
   role = module.iam_role_s3_full_access.iam_role_s3_full_access_id
 }
 

@@ -121,3 +121,6 @@ output "cloudfront_oai_wp_id" {
 output "iam_role_s3_full_access_id" {
   value = module.iam_role_s3_full_access.iam_role_s3_full_access_id
 }
+output "iam_role_s3_instance_profile_s3_id" {
+  value = module.iam_role_s3_instance_profile_s3.iam_role_s3_instance_profile_id
+}
