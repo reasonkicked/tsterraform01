@@ -47,21 +47,31 @@ module "s3-wp-media-ts" {
   source = "./modules/data-stores/s3-wp-media-ts"
   bucket = "s3-wp-media-ts"
 }
-/*
+module "bucket_policy_s3_full_access" {
+  source = "./modules/bucket_policy_s3_full_access"
+  bucket = module.s3-wp-media-ts.s3_bucket_id
+}
+
 module "iam_role_s3_full_access" {
   source = "./modules/iam_role_s3_full_access"
-}*/
+}
+module "iam_role_s3_full_access_attachment" {
+  source = "./modules/iam_role_s3_full_access_attachment"
+  role = module.iam_role_s3_full_access.iam_role_s3_full_access_id
+}
+
 module "cloudfront_oai_wp" {
   source = "./modules/data-stores/s3-wp-media-ts/cloudfront_oai"
 }
 
-module "cloudfront_distr_wp" {
-  
+module "cloudfront_distr_wp" {  
   source = "./modules/data-stores/s3-wp-media-ts/cloudfront_distr"
   domain_name = "s3-wp-media-ts.s3.amazonaws.com"
   origin_id = "s3-wp-media-ts"
   oai_id = "origin-access-identity/cloudfront/EDU6S5KRM2MS5"
 }
+
+
 
 module "rds_db_subnet_group_01" {
   source = "./modules/data-stores/rds-db-subnet-group"

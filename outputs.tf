@@ -117,6 +117,7 @@ output "s3_bucket_s3-wp-media-ts_id" {
 output "cloudfront_oai_wp_id" {
   value = module.cloudfront_oai_wp.oai_id
 }
+
 output "iam_role_s3_full_access_id" {
   value = module.iam_role_s3_full_access.iam_role_s3_full_access_id
 }
