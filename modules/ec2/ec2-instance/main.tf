@@ -23,6 +23,7 @@ resource "aws_instance" "ec2_instance" {
   ami           = var.instance_ami
   instance_type = var.instance_type
   iam_instance_profile = "iam_role_s3_instance_profile_s3"
+ 
       //user_data = var.user_data_script
     //user_data = data.template_file.user_data.rendered
     user_data = <<-EOF

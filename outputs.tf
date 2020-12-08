@@ -73,6 +73,9 @@ output "rds_db_subnet_group_01_id" {
 output "ec2_key_pair_name" {
     value = module.ec2_key_pair.key_pair_name
 }
+output "ec2_write_node_primary_id" {
+  value = module.ec2_write_node_primary.ec2_instance_id
+}
 
 output "ec2_asg_lc_1_name" {
   value = module.ec2_asg_lc_1.ec2_asg_lc_name
@@ -88,6 +91,9 @@ output "alb_listener_http_01_arn" {
 
 output "alb_target_group_01_arn" {
   value = module.alb_target_group_01.alb_target_group_arn
+}
+output "alb_target_group_02_arn" {
+  value = module.alb_target_group_02.alb_target_group_arn
 }
 
 output "eip_01_id" {

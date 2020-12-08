@@ -15,6 +15,7 @@ variable "subnet_for_ec2" {
 variable "key_pair_for_ec2" {
 
 }
+
 /*
 
 variable "user_data_script" {
