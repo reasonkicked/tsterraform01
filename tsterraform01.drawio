@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-08T09:27:08.397Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="eoeTdzCoVs4FkajM7M5k" version="13.11.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-08T11:39:20.069Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="yhmSjkat3Quae6XXOiZh" version="13.11.0" type="github">
   <diagram id="rzrUFIEG0DzhDdMzmfyW" name="Page-1">
     <mxGraphModel dx="2062" dy="1154" grid="0" gridSize="4" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -328,10 +328,10 @@
         <mxCell id="Wy2JTJEjo5nOgJIPvcWn-29" value="user" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="737" y="136" width="33" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="xpse6XwSsWlsktQS9DOF-1" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
+        <mxCell id="xpse6XwSsWlsktQS9DOF-1" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" parent="1" vertex="1">
           <mxGeometry x="309.44" y="623" width="35.37" height="43" as="geometry" />
         </mxCell>
-        <mxCell id="xpse6XwSsWlsktQS9DOF-2" value="ec2-write-node&lt;br&gt;backup" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="xpse6XwSsWlsktQS9DOF-2" value="ec2-write-node&lt;br&gt;backup" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="282.63" y="588.75" width="89" height="32" as="geometry" />
         </mxCell>
       </root>
