@@ -135,8 +135,8 @@ module "ec2_asg_web_server" {
   depends_on = [    module.ec2_asg_lc_1   ]
   launch_configuration = module.ec2_asg_lc_1.ec2_asg_lc_name
   Name-tag = "ec2-asg-web-server"
-  min_size = 3
-  max_size = 4
+  min_size = 1
+  max_size = 2
   health_check_grace_period = 30
 
   target_group_arns  = [module.alb_target_group_01.alb_target_group_arn]

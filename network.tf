@@ -163,13 +163,14 @@ module "sg_443" {
     sg_from_port = 443
     sg_to_port = 443
 }
+/*
 module "sg_8080" {
     source = "./modules/network/security_group"
     name = "sg_8080"
     vpc_id = module.vpc1.vpc_id
     sg_from_port = 8080
     sg_to_port = 8080
-}
+}*/
 
 
 module "sg_3306" {
@@ -181,7 +182,6 @@ module "sg_3306" {
     
    //module.sg_8080.security_group_sg_8080_id
     security_groups_ids = [
-        module.sg_80.security_group_id,
-        module.sg_8080.security_group_id
+        module.sg_80.security_group_id        
     ]
 }

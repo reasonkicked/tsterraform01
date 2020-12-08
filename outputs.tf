@@ -61,9 +61,7 @@ output "security_group_sg_80_id" {
 output "security_group_sg_443_id" {
   value = module.sg_443.security_group_id
 }
-output "security_group_sg_8080_id" {
-  value = module.sg_8080.security_group_id
-}
+
 output "security_group_sg_3306_id" {
   value = module.sg_3306.security_group_id
 }
