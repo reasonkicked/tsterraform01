@@ -102,6 +102,9 @@ output "eip_01_id" {
 output "eip_02_id" {
   value = module.eip_02.eip_id
 }
+output "eip_03_id" {
+  value = module.eip_02.eip_id
+}
 output "nat_gw_01_id" {
   value = module.nat_gw_01.nat_gw_id
 }

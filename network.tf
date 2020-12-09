@@ -85,6 +85,10 @@ module "eip_01" {
 module "eip_02" {
   source = "./modules/network/eip"
 }
+module "eip_03_for_ec2" {
+  source = "./modules/network/eip_for_ec2"
+  instance = module.ec2_write_node_primary.ec2_instance_id
+}
 module "nat_gw_01" {
   source = "./modules/network/nat_gw"
   allocation_id = module.eip_01.eip_id
@@ -163,14 +167,7 @@ module "sg_443" {
     sg_from_port = 443
     sg_to_port = 443
 }
-/*
-module "sg_8080" {
-    source = "./modules/network/security_group"
-    name = "sg_8080"
-    vpc_id = module.vpc1.vpc_id
-    sg_from_port = 8080
-    sg_to_port = 8080
-}*/
+
 
 
 module "sg_3306" {
@@ -180,7 +177,7 @@ module "sg_3306" {
     sg_from_port = 3306
     sg_to_port = 3306
     
-   //module.sg_8080.security_group_sg_8080_id
+  
     security_groups_ids = [
         module.sg_80.security_group_id        
     ]

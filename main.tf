@@ -118,6 +118,21 @@ module "ec2_write_node" {
   Name-tag = "ec2_write_node"
   Owner-tag = "tstanislawczyk"
 }
+module "ec2_write_node_backup" {
+  source = "./modules/ec2/ec2-instance"
+  instance_ami = "ami-0e0853514566c3729"
+  instance_type = "t2.micro"
+  subnet_for_ec2 = module.subnet_private_1.private_subnet_id
+  
+  key_pair_for_ec2 = module.ec2_key_pair.key_pair_name
+  security_groups_for_ec2 = [
+    module.sg_443.security_group_id,
+    module.sg_80.security_group_id,
+    module.sg_22.security_group_id
+  ]
+  Name-tag = "ec2_write_node_backup"
+  Owner-tag = "tstanislawczyk"
+}
 
 module "ec2_write_node_primary" {
   source = "./modules/ec2/ec2-instance"
@@ -236,6 +251,7 @@ module "alb_listener_rule_01" {
 
 
 }
+
 module "alb_listener_rule_02" {
   source = "./modules/network/alb_listener_rule"
 
