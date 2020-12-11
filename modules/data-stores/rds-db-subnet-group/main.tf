@@ -19,7 +19,7 @@ data "terraform_remote_state" "terraform_state" {
     key    = "terraform_state/terraform.tfstate"
     region = "us-west-2"
   }
-}
+} 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = var.subnet_group_name
   subnet_ids = var.subnets_ids_list

@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "tsterraform01-s3" {
     }
   }
 }
-terraform {
+/*terraform {
   backend "s3" {
     # Replace this with your bucket name!
     bucket         = "tsterraform01-s3"
@@ -32,7 +32,7 @@ terraform {
    // encrypt        = true
   }
 }
-
+*/
 
 /*
 module "network" {
